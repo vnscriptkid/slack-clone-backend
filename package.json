@@ -1,0 +1,31 @@
+{
+  "name": "slack-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Thanh Nguyen",
+    "email": "vnscriptkid@gmail.com"
+  },
+  "scripts": {
+    "build": "babel index.js -d dist",
+    "start": "nodemon --exec babel-node index.js",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "apollo-server-express": "^1.1.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
