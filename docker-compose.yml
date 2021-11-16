@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    image: "postgres:11.6"
+    container_name: "postgres_slack"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=slack-dev
+    ports:
+      - "5432:5432"
