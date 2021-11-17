@@ -13,7 +13,7 @@
     "start": "nodemon --exec babel-node index.js",
     "poststart": "docker-compose down",
     "lint": "eslint",
-    "psql": "docker exec - postgres_slack psql -U postgres"
+    "psql": "docker exec -it postgres_slack psql -U postgres"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.3",
