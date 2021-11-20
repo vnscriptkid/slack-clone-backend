@@ -15,7 +15,7 @@ const resolvers = mergeResolvers(
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, "./schema")));
 
 async function startApolloServer(typeDefs, resolvers) {
-  await models.sequelize.sync({ force: true });
+  await models.sequelize.sync({});
 
   const app = express();
 
@@ -25,6 +25,9 @@ async function startApolloServer(typeDefs, resolvers) {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: {
+      models,
+    },
   });
 
   await server.start();
