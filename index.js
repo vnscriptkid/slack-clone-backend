@@ -27,6 +27,9 @@ async function startApolloServer(typeDefs, resolvers) {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: {
       models,
+      user: {
+        id: 1,
+      },
     },
   });
 
