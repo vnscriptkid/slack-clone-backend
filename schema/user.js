@@ -14,6 +14,13 @@ export const typeDef = gql`
     errors: [Error!]
   }
 
+  type LoginResponse {
+    ok: Boolean!
+    token: String
+    refreshToken: String
+    errors: [Error!]
+  }
+
   type Query {
     allUsers: [User!]!
     getUser(id: Int!): User
@@ -25,5 +32,6 @@ export const typeDef = gql`
       email: String!
       password: String!
     ): RegisterResponse
+    login(email: String!, password: String!): LoginResponse!
   }
 `;
