@@ -8,6 +8,8 @@ import { ApolloServer } from "apollo-server-express";
 
 import models from "./models";
 
+require("dotenv").config();
+
 const resolvers = mergeResolvers(
   loadFilesSync(path.join(__dirname, "./resolvers"))
 );
