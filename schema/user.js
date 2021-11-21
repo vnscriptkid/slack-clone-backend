@@ -8,12 +8,22 @@ export const typeDef = gql`
     teams: [Team!]!
   }
 
+  type RegisterResponse {
+    ok: Boolean!
+    user: User
+    errors: [Error!]
+  }
+
   type Query {
     allUsers: [User!]!
     getUser(id: Int!): User
   }
 
   type Mutation {
-    register(username: String!, email: String!, password: String!): Boolean!
+    register(
+      username: String!
+      email: String!
+      password: String!
+    ): RegisterResponse
   }
 `;
