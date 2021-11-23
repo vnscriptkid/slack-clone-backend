@@ -26,8 +26,9 @@ export const createTokens = async (user, secret, secret2) => {
   return [createToken, createRefreshToken];
 };
 
-export const refreshTokens = async (token, refreshToken, models, SECRET) => {
-  let userId = -1;
+export const refreshTokens = async (token, refreshToken, models) => {
+  let userId = 0;
+
   try {
     const {
       user: { id },
@@ -37,26 +38,24 @@ export const refreshTokens = async (token, refreshToken, models, SECRET) => {
     return {};
   }
 
-  if (!userId) {
-    return {};
-  }
+  if (!userId) return {};
 
   const user = await models.User.findOne({ where: { id: userId }, raw: true });
 
-  if (!user) {
-    return {};
-  }
+  if (!user) return {};
+
+  const refreshSecret = buildRefreshTokenSecret(user);
 
   try {
-    jwt.verify(refreshToken, user.refreshSecret);
+    jwt.verify(refreshToken, refreshSecret);
   } catch (err) {
     return {};
   }
 
   const [newToken, newRefreshToken] = await createTokens(
     user,
-    SECRET,
-    user.refreshSecret
+    process.env.JWT_SECRET,
+    refreshSecret
   );
   return {
     token: newToken,
@@ -84,12 +83,10 @@ export const tryLogin = async (email, password, models) => {
     };
   }
 
-  const refreshTokenSecret = user.password + process.env.JWT_SECRET2;
-
   const [token, refreshToken] = await createTokens(
     user,
     process.env.JWT_SECRET,
-    refreshTokenSecret
+    buildRefreshTokenSecret(user)
   );
 
   return {
@@ -98,3 +95,7 @@ export const tryLogin = async (email, password, models) => {
     refreshToken,
   };
 };
+
+function buildRefreshTokenSecret(user) {
+  return user.password + process.env.JWT_SECRET2;
+}
