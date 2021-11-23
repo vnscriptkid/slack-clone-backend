@@ -7,6 +7,9 @@
     "name": "Thanh Nguyen",
     "email": "vnscriptkid@gmail.com"
   },
+  "engines": {
+    "node": "16.9.0"
+  },
   "scripts": {
     "prestart": "docker-compose up -d",
     "build": "babel index.js -d dist",
