@@ -1,0 +1,22 @@
+@teamName = fpt
+
+### Create team
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+x-token: {{token}}
+x-refresh-token: {{refreshToken}}
+
+mutation CreateTeam($name: String!) {
+  createTeam(name: $name) {
+    ok
+    errors {
+      path
+      message
+    }
+  }
+}
+
+{
+    "name": "{{teamName}}"
+}

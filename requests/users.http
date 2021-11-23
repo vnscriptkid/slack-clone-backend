@@ -1,0 +1,80 @@
+@username = thanh
+@email = thanh@gmail.com
+@password = 123456
+
+### Register
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation Register($username: String!, $email: String!, $password: String!) {
+  register(username: $username, email: $email, password: $password) {
+      ok
+      user {
+          username
+          email
+      }
+      errors {
+          path
+          message
+      }
+  }
+}
+
+{
+    "username": "{{username}}",
+    "email": "{{email}}",
+    "password": "{{password}}"
+}
+
+### Login
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+      ok,
+      token
+      refreshToken
+      errors {
+          path
+          message
+      }
+  }
+}
+
+{
+    "email": "{{email}}",
+    "password": "{{password}}"
+}
+
+### Get all users
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query GetAllUsers {
+  allUsers {
+    id
+    username
+    email
+  }
+}
+
+### Get a single user
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query GetUser($id: Int!) {
+  getUser(id: $id) {
+    username
+    id
+    email
+  }
+}
+
+{
+    "id": 1
+}
