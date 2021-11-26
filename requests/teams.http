@@ -39,3 +39,20 @@ mutation CreateTeam($name: String!) {
 {
     "name": "{{teamName}}"
 }
+
+### Get all teams
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+x-token: {{token}}
+x-refresh-token: {{refreshToken}}
+
+query GetAllTeams{
+  allTeams {
+    id
+    name
+    channels {
+      name
+    }
+  }
+}
