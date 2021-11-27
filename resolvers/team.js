@@ -1,3 +1,4 @@
+import { UniqueConstraintError } from "sequelize/lib/errors";
 import formatErrors from "../formatErrors";
 import requireAuth from "../permissions";
 
@@ -81,6 +82,14 @@ export default {
           };
         } catch (e) {
           console.error(e);
+          if (e instanceof UniqueConstraintError) {
+            return {
+              ok: false,
+              errors: [
+                { path: "email", message: "This user has been invited." },
+              ],
+            };
+          }
           return {
             ok: false,
             errors: formatErrors(e, models),
