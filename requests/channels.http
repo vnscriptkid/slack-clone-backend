@@ -6,10 +6,20 @@ x-token: {{token}}
 x-refresh-token: {{refreshToken}}
 
 mutation Mutation($teamId: Int!, $name: String!) {
-  createChannel(teamId: $teamId, name: $name)
+  createChannel(teamId: $teamId, name: $name) {
+    ok
+    channel {
+      id
+      name
+    }
+    errors {
+      path
+      message
+    }
+  }
 }
 
 {
     "teamId": 2,
-    "name": "new-team"
+    "name": "old-team"
 }

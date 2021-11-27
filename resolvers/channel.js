@@ -1,3 +1,5 @@
+import formatErrors from "../formatErrors";
+
 export default {
   Mutation: {
     createChannel: async (
@@ -6,11 +8,21 @@ export default {
       { models }
     ) => {
       try {
-        await models.Channel.create({ teamId, name, public: isPublic });
-        return true;
+        const channel = await models.Channel.create({
+          teamId,
+          name,
+          public: isPublic,
+        });
+        return {
+          ok: true,
+          channel,
+        };
       } catch (e) {
         console.error(e);
-        return false;
+        return {
+          ok: false,
+          errors: formatErrors(e, models),
+        };
       }
     },
   },
