@@ -6,7 +6,7 @@ export default {
       { models }
     ) => {
       try {
-        models.Channel.create({ teamId, name, public: isPublic });
+        await models.Channel.create({ teamId, name, public: isPublic });
         return true;
       } catch (e) {
         console.error(e);
