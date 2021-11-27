@@ -5,7 +5,7 @@ export default {
   Query: {
     allTeams: requireAuth.createResolver(
       async (parent, args, { models, user }) =>
-        models.Team.findAll({ owner: user.id }, { raw: true })
+        models.Team.findAll({ where: { owner: user.id } }, { raw: true })
     ),
   },
   Mutation: {
@@ -28,6 +28,6 @@ export default {
   },
   Team: {
     channels: ({ id }, args, { models }) =>
-      models.Channel.findAll({ teamId: id }),
+      models.Channel.findAll({ where: { teamId: id } }),
   },
 };
