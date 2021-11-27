@@ -11,6 +11,7 @@ export const typeDef = gql`
 
   type CreateTeamResponse {
     ok: Boolean!
+    team: Team!
     errors: [Error!]
   }
 

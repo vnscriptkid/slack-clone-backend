@@ -12,9 +12,16 @@ export default {
     createTeam: requireAuth.createResolver(
       async (parent, { name }, { models, user }) => {
         try {
-          await models.Team.create({ name, owner: user.id });
+          const team = await models.Team.create({ name, owner: user.id });
+          await models.Channel.create({
+            name: "general",
+            public: true,
+            teamId: team.id,
+          });
+
           return {
             ok: true,
+            team,
           };
         } catch (e) {
           console.error(e);
