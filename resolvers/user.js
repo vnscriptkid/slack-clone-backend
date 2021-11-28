@@ -9,10 +9,11 @@ export default {
   Mutation: {
     register: async (parent, { username, email, password }, { models }) => {
       try {
-        await models.User.create({ username, email, password });
+        const user = await models.User.create({ username, email, password });
         return {
           ok: true,
           errors: null,
+          user,
         };
       } catch (e) {
         return {
