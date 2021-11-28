@@ -17,6 +17,7 @@ export const typeDef = gql`
 
   type Query {
     allTeams: [Team!]!
+    invitedTeams: [Team!]!
   }
 
   type VoidResponse {
