@@ -1,4 +1,4 @@
-@teamName = bungee-team
+@teamName = linh-team
 
 ### Create team (auth)
 POST http://localhost:4000/graphql
@@ -81,4 +81,18 @@ mutation AddTeamMember($teamId: Int!, $email: String!) {
 {
     "email": "linh@gmail.com",
     "teamId": 1
+}
+
+### Get invited teams
+POST http://localhost:4000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+x-token: {{token}}
+x-refresh-token: {{refreshToken}}
+
+query InvitedTeams {
+  invitedTeams {
+    id
+    name
+  }
 }
