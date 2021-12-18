@@ -1,9 +1,4 @@
 import axios from "axios";
-import models from "../models";
-
-beforeEach(async () => {
-  await models.User.sync({ force: true });
-});
 
 describe("user resolvers", () => {
   test("allUsers", async () => {
