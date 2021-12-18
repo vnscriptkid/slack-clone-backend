@@ -15,7 +15,7 @@
     "pretest": "docker-compose up -d",
     "build": "babel index.js -d dist",
     "start": "nodemon --exec babel-node index.js",
-    "test": "cross-env TEST_DB=slack-test PORT=4001 jest --detectOpenHandles --watchAll",
+    "test": "cross-env TEST_DB=slack-test PORT=4001 jest --detectOpenHandles --watchAll --runInBand",
     "poststart": "docker-compose down",
     "lint": "eslint",
     "psql": "docker exec -it postgres_slack psql -U postgres"
