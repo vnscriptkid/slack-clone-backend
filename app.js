@@ -6,11 +6,17 @@ import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
 import { loadFilesSync } from "@graphql-tools/load-files";
 import { ApolloServer } from "apollo-server-express";
 import jwt from "jsonwebtoken";
+import { PubSub } from "graphql-subscriptions";
 
 import models from "./models";
 import { refreshTokens } from "./auth";
+import { SubscriptionServer } from "subscriptions-transport-ws";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { execute, subscribe } from "graphql";
 
 require("dotenv").config();
+
+export const pubsub = new PubSub();
 
 export async function startApolloServer() {
   const resolvers = mergeResolvers(
@@ -29,10 +35,39 @@ export async function startApolloServer() {
 
   const httpServer = http.createServer(app);
 
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      // This is the `schema` we just created.
+      schema,
+      // These are imported from `graphql`.
+      execute,
+      subscribe,
+    },
+    {
+      // This is the `httpServer` we created in a previous step.
+      server: httpServer,
+      // Pass a different path here if your ApolloServer serves at
+      // a different path.
+      path: "/graphql",
+    }
+  );
+
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    schema,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
     context: ({ req }) => {
       return {
         models,

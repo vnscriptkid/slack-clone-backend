@@ -31,10 +31,12 @@
     "cross-env": "^7.0.3",
     "express": "^4.16.1",
     "graphql": "^16.0.1",
+    "graphql-subscriptions": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "pg": "^8.7.1",
     "sequelize": "^4.13.5",
+    "subscriptions-transport-ws": "^0.11.0",
     "yarn": "^1.22.17"
   },
   "devDependencies": {
