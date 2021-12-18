@@ -6,7 +6,7 @@ export const typeDef = gql`
     text: String!
     user: User!
     channel: Channel!
-    createdAt: String!
+    created_at: String!
   }
 
   type Query {

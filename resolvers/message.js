@@ -2,7 +2,20 @@ import requireAuth from "../permissions";
 
 export default {
   Query: {
-    messages: async (parent, args, { models, user }) => [],
+    messages: requireAuth.createResolver(
+      async (parent, { channelId }, { models, user }) => {
+        // TODO: user must be authorized to see this channel
+        return models.Message.findAll(
+          {
+            where: { channelId },
+            order: [["created_at", "desc"]],
+          },
+          {
+            raw: true,
+          }
+        );
+      }
+    ),
   },
   Mutation: {
     createMessage: requireAuth.createResolver(
@@ -20,5 +33,10 @@ export default {
         }
       }
     ),
+  },
+  Message: {
+    user: ({ userId }, args, { models }) => {
+      return models.User.findOne({ where: { id: userId } }, { raw: true });
+    },
   },
 };
