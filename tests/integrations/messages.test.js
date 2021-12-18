@@ -60,16 +60,8 @@ describe("messages resolvers", () => {
 
     const message = await models.Message.findOne({
       where: { channel_id: channel.id },
-      attributes: { exclude: ["created_at", "updated_at"] },
     });
 
-    expect(message.toJSON()).toMatchInlineSnapshot(`
-Object {
-  "channelId": 16,
-  "id": 9,
-  "text": "Test message",
-  "userId": 16,
-}
-`);
+    expect(message.text).toBe(text);
   });
 });
