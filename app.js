@@ -1,5 +1,5 @@
 import express from "express";
-import http from "http";
+import { createServer } from "http";
 import path from "path";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
@@ -33,7 +33,7 @@ export async function startApolloServer() {
 
   app.use(addUser);
 
-  const httpServer = http.createServer(app);
+  const httpServer = createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers });
 
@@ -50,7 +50,7 @@ export async function startApolloServer() {
       server: httpServer,
       // Pass a different path here if your ApolloServer serves at
       // a different path.
-      path: "/graphql",
+      path: "/subscriptions",
     }
   );
 
