@@ -16,4 +16,8 @@ export const typeDef = gql`
   type Mutation {
     createMessage(channelId: Int!, text: String!): Boolean!
   }
+
+  type Subscription {
+    newChannelMessage(channelId: Int!): Message!
+  }
 `;
